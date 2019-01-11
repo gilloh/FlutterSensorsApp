@@ -4,6 +4,25 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 
+// Widget
+
+//          Center(
+//            child: DecoratedBox(
+//              decoration: BoxDecoration(
+//                border: Border.all(width: 1.0, color: Colors.red),
+//              ),
+//              child: SizedBox(
+//                  height: _snakeRows * _snakeCellSize,
+//                  width: _snakeColumns * _snakeCellSize,
+//                  child: Snake(
+//                    rows: _snakeRows,
+//                    columns: _snakeColumns,
+//                    cellSize: _snakeCellSize,
+//                  )
+//              ),
+//            ),
+//          ),
+
 class Snake extends StatefulWidget {
 
   Snake({this.rows = 20, this.columns = 20, this.cellSize = 10.0}) {

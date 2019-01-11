@@ -38,14 +38,6 @@ class _SensorsPageState extends State<SensorsPage> {
   List<double> _gyroscopeValues;
   List<StreamSubscription<dynamic>> _streamSubscriptions = <StreamSubscription<dynamic>>[];
 
-//  static final Duration _timerDuration = Duration(seconds: 10);
-//  RestartableTimer _timer = RestartableTimer(_timerDuration, _showWarningDialog);
-//  static int currentDuration = _timer.tick;
-
-//  static void _showWarningDialog() {
-//    print('$_timer');
-//  }
-
   @override
   Widget build(BuildContext context) {
     final List<String> accelerometer = _accelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList();
@@ -58,22 +50,7 @@ class _SensorsPageState extends State<SensorsPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Center(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(width: 1.0, color: Colors.red),
-              ),
-              child: SizedBox(
-                  height: _snakeRows * _snakeCellSize,
-                  width: _snakeColumns * _snakeCellSize,
-                  child: Snake(
-                    rows: _snakeRows,
-                    columns: _snakeColumns,
-                    cellSize: _snakeCellSize,
-                  )
-              ),
-            ),
-          ),
+
           Padding(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,29 +134,7 @@ class _SensorsPageState extends State<SensorsPage> {
     _streamSubscriptions.add(userAccelerometerEvents.listen((UserAccelerometerEvent event) {
       setState(() {
         _userAccelerometerValues = <double>[event.x, event.y, event.z];
-
-//        if (event.y < 0.01 && !_timer.isActive) {
-//          print("HERE");
-//          this._timer.reset();
-//        }
       });
     }));
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
