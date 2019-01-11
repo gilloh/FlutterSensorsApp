@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
-import 'package:async/async.dart';
-import 'snake.dart';
+//import 'package:async/async.dart';
+//import 'snake.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,9 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sensors Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.dark(),
       home: SensorsPage(title: 'Sensors Demo'),
     );
   }
@@ -29,92 +27,63 @@ class SensorsPage extends StatefulWidget {
 }
 
 class _SensorsPageState extends State<SensorsPage> {
-  static const int _snakeRows = 20;
-  static const int _snakeColumns = 20;
-  static const double _snakeCellSize = 10.0;
+//  static const int _snakeRows = 20;
+//  static const int _snakeColumns = 20;
+//  static const double _snakeCellSize = 10.0;
 
   List<double> _accelerometerValues;
   List<double> _userAccelerometerValues;
   List<double> _gyroscopeValues;
   List<StreamSubscription<dynamic>> _streamSubscriptions = <StreamSubscription<dynamic>>[];
 
+  Widget _buildTextBlock(String sensorType, List<String> sensorData, Color color) {
+    return Text(
+      '$sensorType\n$sensorData\n',
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 40.0,
+        color: color,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<String> accelerometer = _accelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList();
     final List<String> gyroscope = _gyroscopeValues?.map((double v) => v.toStringAsFixed(1))?.toList();
-    final List<String> userAccelerometer = _userAccelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList();
+//    final List<String> userAccelerometer = _userAccelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList();
 
     return Scaffold(
-      appBar: _buildAppBar(),
-      backgroundColor: Colors.blue[50],
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-
-          Padding(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  '> Accelerometer: $accelerometer',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                    color: Colors.blue,
-                  ),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.only(left: 16.0),
-          ),
-          Padding(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "> Gyroscope: $gyroscope",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                    color: Colors.orange,
-                  ),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.only(left: 16.0),
-          ),
-          Padding(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "> UserAccelerometer: $userAccelerometer",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                    color: Colors.green,
-                  ),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.only(left: 16.0),
-          ),
-        ],
+      appBar: AppBar(
+        title: Text(
+          'Sensors Demo',
+          style: TextStyle(color: Colors.lightBlueAccent, fontSize: 25.0, fontWeight: FontWeight.bold),
+        ),
       ),
-    );
-  }
-
-  Widget _buildAppBar() {
-    return AppBar(
-      title: Text("Sensors Demo"),
+      body: Center(
+        child: Card(
+          semanticContainer: true,
+          margin: EdgeInsets.all(40.0),
+          elevation: 10.0,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _buildTextBlock("Accelerometer", accelerometer, Colors.greenAccent),
+              _buildTextBlock("Gyroscope", gyroscope, Colors.redAccent),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
   @override
   void dispose() {
     super.dispose();
-    for (StreamSubscription<dynamic> subscription in _streamSubscriptions)
-      subscription.cancel();
+    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) subscription.cancel();
   }
 
   @override
